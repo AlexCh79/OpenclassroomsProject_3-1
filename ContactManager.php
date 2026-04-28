@@ -34,6 +34,10 @@ class ContactManager extends DBConnect
         $db->execute(['id' => $id]);
         $db = $db->fetch();
 
+        if (!$db){
+            return null;
+        }
+
         $contact = new Contact();
         $contact->setId($db['id']);
         $contact->setName($db['name']);
@@ -52,5 +56,12 @@ class ContactManager extends DBConnect
             'email' => $contact->getEmail(),
             'phone' => $contact->getPhone(),
         ]);
+    }
+
+    public function deleteContact(int $id): void
+    {
+        $db = parent::getPDO();
+        $db = $db->prepare('DELETE FROM contact WHERE id = :id');
+        $db->execute(['id' => $id]);
     }
 }

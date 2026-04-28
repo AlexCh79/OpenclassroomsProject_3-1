@@ -18,5 +18,9 @@ while (true) {
         $nouveau = array_map('trim', explode(',',$ligne));
         $contact = new Command;
         $contact->create($nouveau);
+    } elseif (preg_match('/^delete\s+(\d+)$/', $line, $matches)) {
+        $id = (int)$matches[1];
+        $contact = new Command;
+        $contact->delete($id);
     }
 }

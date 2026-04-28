@@ -31,10 +31,22 @@ class Command
         $nouveau = new Contact();
         $nouveau->setName($line[0]);
         $nouveau->setEmail($line[1]);
-        $nouveau->setPhone($line[2]);
+        if (strlen($line[2])>10) {
+            echo "Erreur : le numéro de téléphone est trop long.\n";
+        } else {
+            $nouveau->setPhone($line[2]);
+        }
         $contact = new ContactManager();
         $contact->createContact($nouveau);
         echo "Nouveau contact enregistré avec succès ! {$nouveau} \n";
         return $nouveau;
+    }
+
+    // Suppression d'un contact
+    public function delete(int $id): void
+    {
+        $contact = new ContactManager();
+        $contact->deleteContact($id);
+        echo "Suppression effectuée\n";
     }
 }
