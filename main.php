@@ -26,5 +26,8 @@ while ($isOn) {
         $contact->delete($id);
     } elseif ($line === 'quit') {
         $isOn = false;
+    } elseif ($line === 'help') {
+        $command = new Command;
+        $command->help();
     }
 }

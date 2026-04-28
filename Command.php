@@ -49,4 +49,14 @@ class Command
         $contact->deleteContact($id);
         echo "Suppression effectuée\n";
     }
+
+    // Affichage de la commande help
+    public function help(): void
+    {
+        $aide = require 'help.php';
+        echo "Liste des commandes disponibles : \n";
+        foreach ($aide as $command => $description) {
+            echo "{$command} : {$description}\n";
+        }
+    }
 }
