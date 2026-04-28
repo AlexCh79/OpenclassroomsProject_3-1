@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 require_once 'Command.php';
 
-while (true) {
-    $line = readline("Entrez votre commande : ");
+$isOn = true;
+
+while ($isOn) {
+    $line = readline("Entrez votre commande (help, list, detail, create, delete, quit) : ");
     if ($line === 'list') {
         $liste = new Command;
         $liste->list();
@@ -22,5 +24,7 @@ while (true) {
         $id = (int)$matches[1];
         $contact = new Command;
         $contact->delete($id);
+    } elseif ($line === 'quit') {
+        $isOn = false;
     }
 }
