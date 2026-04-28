@@ -27,9 +27,3 @@ class ContactManager extends DBConnect
         return $contacts;
     }
 }
-$liste = new ContactManager;
-$liste = $liste->findAll();
-
-foreach ($liste as $c){
-    echo $c ."<br>";
-}
