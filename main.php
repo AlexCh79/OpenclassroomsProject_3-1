@@ -10,4 +10,9 @@ while (true) {
         $liste = new Command;
         $liste->list();
     }
+    if (preg_match('/^detail\s+(\d+)$/', $line, $matches)) {
+        $id = (int)$matches[1];
+        $contact = new Command;
+        $contact->detail($id);
+    }
 }

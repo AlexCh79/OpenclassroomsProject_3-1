@@ -26,4 +26,20 @@ class ContactManager extends DBConnect
         }
         return $contacts;
     }
+
+    public function findById(int $id): ?Contact
+    {
+        $db = parent::getPDO();
+        $db = $db->prepare('SELECT * FROM contact WHERE id = :id');
+        $db->execute(['id' => $id]);
+        $db = $db->fetch();
+
+        $contact = new Contact();
+        $contact->setId($db['id']);
+        $contact->setName($db['name']);
+        $contact->setEmail($db['email']);
+        $contact->setPhone($db['phone_number']);
+        
+        return $contact;
+    }
 }
