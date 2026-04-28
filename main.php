@@ -9,10 +9,14 @@ while (true) {
     if ($line === 'list') {
         $liste = new Command;
         $liste->list();
-    }
-    if (preg_match('/^detail\s+(\d+)$/', $line, $matches)) {
+    } elseif (preg_match('/^detail\s+(\d+)$/', $line, $matches)) {
         $id = (int)$matches[1];
         $contact = new Command;
         $contact->detail($id);
+    } elseif (preg_match('/^create\s+(.+)$/', $line, $matches)) {
+        $ligne = $matches[1];
+        $nouveau = array_map('trim', explode(',',$ligne));
+        $contact = new Command;
+        $contact->create($nouveau);
     }
 }

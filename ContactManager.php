@@ -39,7 +39,18 @@ class ContactManager extends DBConnect
         $contact->setName($db['name']);
         $contact->setEmail($db['email']);
         $contact->setPhone($db['phone_number']);
-        
+
         return $contact;
+    }
+
+    public function createContact($contact): void
+    {
+        $db = parent::getPDO();
+        $db = $db->prepare('INSERT INTO contact(name, email, phone_number) VALUES (:name, :email, :phone)');
+        $db->execute([
+            'name' => $contact->getName(),
+            'email' => $contact->getEmail(),
+            'phone' => $contact->getPhone(),
+        ]);
     }
 }

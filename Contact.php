@@ -58,6 +58,6 @@ class Contact
 
     public function __toString(): string
     {
-        return "{$this->id}, {$this->name}, {$this->email}, {$this->phone}";
+        return "{$this->id} {$this->name}, {$this->email}, {$this->phone}";
     }
 }
