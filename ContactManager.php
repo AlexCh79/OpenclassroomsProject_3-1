@@ -5,8 +5,10 @@ declare(strict_types=1);
 require_once 'DBConnect.php';
 require_once 'Contact.php';
 
+// Requêtes SQL pour la gestion des contacts
 class ContactManager extends DBConnect
 {
+    // Liste tous les contacts
     public function findAll(): array
     {
         $db = parent::getPDO();
@@ -27,6 +29,7 @@ class ContactManager extends DBConnect
         return $contacts;
     }
 
+    // Détail d'un seul contact selon son ID
     public function findById(int $id): ?Contact
     {
         $db = parent::getPDO();
@@ -47,6 +50,7 @@ class ContactManager extends DBConnect
         return $contact;
     }
 
+    // Création d'un nouveau contact
     public function createContact(Contact $contact): void
     {
         $db = parent::getPDO();
@@ -58,6 +62,7 @@ class ContactManager extends DBConnect
         ]);
     }
 
+    // Suppression d'un contact
     public function deleteContact(int $id): void
     {
         $db = parent::getPDO();
@@ -65,6 +70,7 @@ class ContactManager extends DBConnect
         $db->execute(['id' => $id]);
     }
 
+    // Modification d'un contact
     public function modifyContact(int $id, Contact $contact): void
     {
         $db = parent::getPDO();

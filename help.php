@@ -1,5 +1,6 @@
 <?php
 
+// Aide pour les commandes disponibles
 return [
     'help' => 'Affiche cette aide',
     'list' => 'Liste des contacts',
