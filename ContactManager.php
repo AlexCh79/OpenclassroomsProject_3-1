@@ -47,7 +47,7 @@ class ContactManager extends DBConnect
         return $contact;
     }
 
-    public function createContact($contact): void
+    public function createContact(Contact $contact): void
     {
         $db = parent::getPDO();
         $db = $db->prepare('INSERT INTO contact(name, email, phone_number) VALUES (:name, :email, :phone)');
@@ -63,5 +63,17 @@ class ContactManager extends DBConnect
         $db = parent::getPDO();
         $db = $db->prepare('DELETE FROM contact WHERE id = :id');
         $db->execute(['id' => $id]);
+    }
+
+    public function modifyContact(int $id, Contact $contact): void
+    {
+        $db = parent::getPDO();
+        $db = $db->prepare('UPDATE contact SET name = :name, email = :email, phone_number = :phone WHERE id = :id');
+        $db->execute([
+            'id' => $id,
+            'name' => $contact->getName(),
+            'email' => $contact->getEmail(),
+            'phone' => $contact->getPhone(),
+        ]);
     }
 }

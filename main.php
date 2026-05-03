@@ -24,10 +24,18 @@ while ($isOn) {
         $id = (int)$matches[1];
         $contact = new Command;
         $contact->delete($id);
-    } elseif ($line === 'quit') {
-        $isOn = false;
+    } elseif (preg_match('/^modify\s+(\d+),\s+(.+)$/', $line, $matches)) {
+        $id = (int)$matches[1];
+        $ligne = $matches[2];
+        $modification = array_map('trim', explode(',',$ligne));
+        $contact = new Command;
+        $contact->modify($id, $modification);
     } elseif ($line === 'help') {
         $command = new Command;
         $command->help();
+    } elseif ($line === 'quit') {
+        $isOn = false;
+    } else {
+        echo "Commande inconnue. Tapez 'help' pour voir les commandes disponibles.\n";
     }
 }

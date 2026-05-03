@@ -31,11 +31,8 @@ class Command
         $nouveau = new Contact();
         $nouveau->setName($line[0]);
         $nouveau->setEmail($line[1]);
-        if (strlen($line[2])>10) {
-            echo "Erreur : le numéro de téléphone est trop long.\n";
-        } else {
-            $nouveau->setPhone($line[2]);
-        }
+        $nouveau->setPhone($line[2]);
+        
         $contact = new ContactManager();
         $contact->createContact($nouveau);
         echo "Nouveau contact enregistré avec succès ! {$nouveau} \n";
@@ -58,5 +55,18 @@ class Command
         foreach ($aide as $command => $description) {
             echo "{$command} : {$description}\n";
         }
+    }
+
+    // Modification d'un contact
+    public function modify(int $id, array $line): void
+    {
+        $modification = new Contact();
+        $modification->setName($line[0]);
+        $modification->setEmail($line[1]);
+        $modification->setPhone($line[2]);
+
+        $contact = new ContactManager();
+        $contact->modifyContact($id, $modification);
+        echo "Modification effectuée\n";
     }
 }
