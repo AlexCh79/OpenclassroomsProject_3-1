@@ -4,12 +4,18 @@ declare(strict_types=1);
 
 class Contact
 {
+    private ?int $id = 0;
+    private ?string $name = null;
+    private ?string $email = null;
+    private ?string $phone = null;
+    
     // ID
-    private ?int $id = null;
 
-    public function setId(int $id): void
+    public function setId(int $id): self
     {
         $this->id = $id;
+        
+        return $this;
     }
 
     public function getId(): ?int
@@ -18,11 +24,12 @@ class Contact
     }
 
     // Name
-    private ?string $name = null;
 
-    public function setName(string $name): void
+    public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
     }
 
     public function getName(): ?string
@@ -31,11 +38,12 @@ class Contact
     }
 
     // Email
-    private ?string $email = null;
 
-    public function setEmail(string $email): void
+    public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
     }
 
     public function getEmail(): ?string
@@ -44,18 +52,20 @@ class Contact
     }
 
     // N° Tel
-    private ?string $phone = null;
 
-    public function setPhone(string $phone):void
+    public function setPhone(string $phone):self
     {
         $this->phone = $phone;
+        
+        return $this;
     }
 
-    public function getPhone(): string
+    public function getPhone(): ?string
     {
         return $this->phone;
     }
 
+    // Format d'affichage de la chaine
     public function __toString(): string
     {
         return "{$this->id} {$this->name}, {$this->email}, {$this->phone}";

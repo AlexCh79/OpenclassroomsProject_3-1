@@ -14,11 +14,11 @@ class ContactManager extends DBConnect
         $db = parent::getPDO();
         $db = $db->prepare('SELECT * FROM contact');
         $db->execute();
-        $db = $db->fetchAll();
-        
+        $lignes = $db->fetchAll();
+
         $contacts = [];
 
-        foreach ($db as $ligne){
+        foreach ($lignes as $ligne){
             $contact = new Contact();
             $contact->setId($ligne['id']);
             $contact->setName($ligne['name']);
@@ -37,10 +37,6 @@ class ContactManager extends DBConnect
         $db->execute(['id' => $id]);
         $db = $db->fetch();
 
-        if (!$db){
-            return null;
-        }
-
         $contact = new Contact();
         $contact->setId($db['id']);
         $contact->setName($db['name']);
@@ -51,7 +47,7 @@ class ContactManager extends DBConnect
     }
 
     // Création d'un nouveau contact
-    public function createContact(Contact $contact): void
+    public function create(Contact $contact): void
     {
         $db = parent::getPDO();
         $db = $db->prepare('INSERT INTO contact(name, email, phone_number) VALUES (:name, :email, :phone)');
@@ -63,7 +59,7 @@ class ContactManager extends DBConnect
     }
 
     // Suppression d'un contact
-    public function deleteContact(int $id): void
+    public function delete(int $id): void
     {
         $db = parent::getPDO();
         $db = $db->prepare('DELETE FROM contact WHERE id = :id');
@@ -71,7 +67,7 @@ class ContactManager extends DBConnect
     }
 
     // Modification d'un contact
-    public function modifyContact(int $id, Contact $contact): void
+    public function modify(int $id, Contact $contact): void
     {
         $db = parent::getPDO();
         $db = $db->prepare('UPDATE contact SET name = :name, email = :email, phone_number = :phone WHERE id = :id');

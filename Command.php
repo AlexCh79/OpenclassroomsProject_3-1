@@ -7,66 +7,67 @@ require_once 'Contact.php';
 class Command
 {
     // Liste complète
-    public function list(): void
+    public function listContacts(): void
     {
         echo "Liste des contacts : \n";
-        $liste = new ContactManager;
-        $liste = $liste->findAll();
-        foreach($liste as $contact){
+        $contactManager = new ContactManager;
+        $contacts = $contactManager->findAll();
+        foreach($contacts as $contact){
             echo $contact."\n";
         }
     }
 
     // Un seul contact
-    public function detail(int $id): void
+    public function detailsContact(int $id): void
     {
-        $contact = new ContactManager;
-        $contact = $contact->findById($id);
+        $contactManager = new ContactManager;
+        $contact = $contactManager->findById($id);
         echo $contact. "\n";
     }
 
     // Création d'un contact
-    public function create(array $line): ?Contact
+    public function createContact(array $line): ?Contact
     {
-        $nouveau = new Contact();
-        $nouveau->setName($line[0]);
-        $nouveau->setEmail($line[1]);
-        $nouveau->setPhone($line[2]);
+        $contact = new Contact();
+        $contact->setName($line[0]);
+        $contact->setEmail($line[1]);
+        $contact->setPhone($line[2]);
+
+        $contactManager = new ContactManager();
+        $contactManager->create($contact);
+        echo "Nouveau contact enregistré avec succès ! {$contact} \n";
         
-        $contact = new ContactManager();
-        $contact->createContact($nouveau);
-        echo "Nouveau contact enregistré avec succès ! {$nouveau} \n";
-        return $nouveau;
+        return $contact;
     }
 
     // Suppression d'un contact
-    public function delete(int $id): void
+    public function deleteContact(int $id): void
     {
-        $contact = new ContactManager();
-        $contact->deleteContact($id);
+        $contactManager = new ContactManager();
+        $contactManager->delete($id);
         echo "Suppression effectuée\n";
     }
 
     // Affichage de la commande help
     public function help(): void
     {
-        $aide = require 'help.php';
+        $help = require 'help.php';
         echo "Liste des commandes disponibles : \n";
-        foreach ($aide as $command => $description) {
+        foreach ($help as $command => $description) {
             echo "{$command} : {$description}\n";
         }
     }
 
     // Modification d'un contact
-    public function modify(int $id, array $line): void
+    public function modifyContact(int $id, array $line): void
     {
-        $modification = new Contact();
-        $modification->setName($line[0]);
-        $modification->setEmail($line[1]);
-        $modification->setPhone($line[2]);
+        $contact = new Contact();
+        $contact->setName($line[0]);
+        $contact->setEmail($line[1]);
+        $contact->setPhone($line[2]);
 
-        $contact = new ContactManager();
-        $contact->modifyContact($id, $modification);
+        $contactManager = new ContactManager();
+        $contactManager->modify($id, $contact);
         echo "Modification effectuée\n";
     }
 }

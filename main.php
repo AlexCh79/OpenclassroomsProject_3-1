@@ -4,34 +4,30 @@ declare(strict_types=1);
 
 require_once 'Command.php';
 
+$command = new Command;
+
 $isOn = true;
 
 while ($isOn) {
     $line = readline("Entrez votre commande (help, list, detail, create, delete, quit) : ");
     if ($line === 'list') {
-        $liste = new Command;
-        $liste->list();
+        $command->listContacts();
     } elseif (preg_match('/^detail\s+(\d+)$/', $line, $matches)) {
         $id = (int)$matches[1];
-        $contact = new Command;
-        $contact->detail($id);
+        $command->detailsContact($id);
     } elseif (preg_match('/^create\s+(.+)$/', $line, $matches)) {
-        $ligne = $matches[1];
-        $nouveau = array_map('trim', explode(',',$ligne));
-        $contact = new Command;
-        $contact->create($nouveau);
+        $data = $matches[1];
+        $contact = array_map('trim', explode(',',$data));
+        $command->createContact($contact);
     } elseif (preg_match('/^delete\s+(\d+)$/', $line, $matches)) {
         $id = (int)$matches[1];
-        $contact = new Command;
-        $contact->delete($id);
+        $command->deleteContact($id);
     } elseif (preg_match('/^modify\s+(\d+),\s+(.+)$/', $line, $matches)) {
         $id = (int)$matches[1];
-        $ligne = $matches[2];
-        $modification = array_map('trim', explode(',',$ligne));
-        $contact = new Command;
-        $contact->modify($id, $modification);
+        $data = $matches[2];
+        $contact = array_map('trim', explode(',',$data));
+        $command->modifyContact($id, $contact);
     } elseif ($line === 'help') {
-        $command = new Command;
         $command->help();
     } elseif ($line === 'quit') {
         $isOn = false;
