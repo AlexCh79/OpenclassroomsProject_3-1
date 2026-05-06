@@ -10,7 +10,7 @@ class Command
     public function listContacts(): void
     {
         echo "Liste des contacts : \n";
-        $contactManager = new ContactManager;
+        $contactManager = new ContactManager();
         $contacts = $contactManager->findAll();
         foreach($contacts as $contact){
             echo $contact."\n";
@@ -20,7 +20,7 @@ class Command
     // Un seul contact
     public function detailsContact(int $id): void
     {
-        $contactManager = new ContactManager;
+        $contactManager = new ContactManager();
         $contact = $contactManager->findById($id);
         echo $contact. "\n";
     }
@@ -36,7 +36,7 @@ class Command
         $contactManager = new ContactManager();
         $contactManager->create($contact);
         echo "Nouveau contact enregistré avec succès ! {$contact} \n";
-        
+
         return $contact;
     }
 
@@ -62,12 +62,13 @@ class Command
     public function modifyContact(int $id, array $line): void
     {
         $contact = new Contact();
+        $contact->setId($id);
         $contact->setName($line[0]);
         $contact->setEmail($line[1]);
         $contact->setPhone($line[2]);
 
         $contactManager = new ContactManager();
-        $contactManager->modify($id, $contact);
+        $contactManager->modify($contact);
         echo "Modification effectuée\n";
     }
 }

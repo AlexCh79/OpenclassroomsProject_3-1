@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 require_once 'Command.php';
 
-$command = new Command;
+$command = new Command();
 
 $isOn = true;
 

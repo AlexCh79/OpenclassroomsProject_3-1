@@ -23,7 +23,7 @@ class ContactManager extends DBConnect
             $contact->setId($ligne['id']);
             $contact->setName($ligne['name']);
             $contact->setEmail($ligne['email']);
-            $contact->setPhone($ligne['phone_number']);
+            $contact->setPhone($ligne['phone']);
             $contacts[] = $contact;
         }
         return $contacts;
@@ -35,13 +35,7 @@ class ContactManager extends DBConnect
         $db = parent::getPDO();
         $db = $db->prepare('SELECT * FROM contact WHERE id = :id');
         $db->execute(['id' => $id]);
-        $db = $db->fetch();
-
-        $contact = new Contact();
-        $contact->setId($db['id']);
-        $contact->setName($db['name']);
-        $contact->setEmail($db['email']);
-        $contact->setPhone($db['phone_number']);
+        $contact = $db->fetchObject(Contact::class);
 
         return $contact;
     }
@@ -50,7 +44,7 @@ class ContactManager extends DBConnect
     public function create(Contact $contact): void
     {
         $db = parent::getPDO();
-        $db = $db->prepare('INSERT INTO contact(name, email, phone_number) VALUES (:name, :email, :phone)');
+        $db = $db->prepare('INSERT INTO contact(name, email, phone) VALUES (:name, :email, :phone)');
         $db->execute([
             'name' => $contact->getName(),
             'email' => $contact->getEmail(),
@@ -67,12 +61,12 @@ class ContactManager extends DBConnect
     }
 
     // Modification d'un contact
-    public function modify(int $id, Contact $contact): void
+    public function modify(Contact $contact): void
     {
         $db = parent::getPDO();
-        $db = $db->prepare('UPDATE contact SET name = :name, email = :email, phone_number = :phone WHERE id = :id');
+        $db = $db->prepare('UPDATE contact SET name = :name, email = :email, phone = :phone WHERE id = :id');
         $db->execute([
-            'id' => $id,
+            'id' => $contact->getId(),
             'name' => $contact->getName(),
             'email' => $contact->getEmail(),
             'phone' => $contact->getPhone(),

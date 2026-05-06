@@ -53,7 +53,7 @@ class Contact
 
     // N° Tel
 
-    public function setPhone(string $phone):self
+    public function setPhone(string $phone): self
     {
         $this->phone = $phone;
         
